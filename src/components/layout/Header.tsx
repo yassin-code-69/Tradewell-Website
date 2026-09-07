@@ -94,9 +94,9 @@ export function Header() {
                 <path d="M6 9l6 6 6-6" />
               </svg>
             </button>
-            <div className="mega">
-              <div className="mega__grid">
-                {CATEGORIES.slice(0, 12).map((c) => (
+            <div className="mega" style={{ width: 'min(520px, calc(100vw - 32px))' }}>
+              <div className="mega__grid" style={{ gridTemplateColumns: '1fr' }}>
+                {CATEGORIES.slice(0, 5).map((c) => (
                   <button
                     key={c.name}
                     className="mega__link"
@@ -107,15 +107,15 @@ export function Header() {
                     }}
                   >
                     <Icon name={c.icon} />
-                    <span>{c.name}</span>
+                    <span>{c.name} ({c.pros} Pros)</span>
                   </button>
                 ))}
               </div>
               <div className="mega__foot">
-                <p>{CATEGORIES.length} categories listed across the directory.</p>
+                <p>Verified Arkansas home service specialists.</p>
                 <a
                   className="btn btn--outline btn--sm"
-                  href="#categories"
+                  href="#featured-categories"
                   onClick={() => {
                     setActiveMenu(null);
                     closeDirectory();
@@ -127,75 +127,40 @@ export function Header() {
             </div>
           </div>
 
-          {/* Services Menu */}
-          <div className={`nav__item ${activeMenu === 'services' ? 'is-open' : ''}`}>
-            <button
-              className="nav__link"
-              aria-expanded={activeMenu === 'services'}
-              aria-haspopup="true"
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveMenu(activeMenu === 'services' ? null : 'services');
-              }}
-            >
-              Services
-              <svg className="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div className="mega mega--wide">
-              <div className="mega__grid">
-                {groups.map((g) => (
-                  <div key={g}>
-                    <div className="mega__col-title">{g}</div>
-                    {CATEGORIES.filter((c) => c.group === g).slice(0, 5).map((c) => (
-                      <button
-                        key={c.name}
-                        className="mega__link"
-                        type="button"
-                        onClick={() => {
-                          setActiveMenu(null);
-                          handleQuickSearch(c.name);
-                        }}
-                      >
-                        {c.name}
-                      </button>
-                    ))}
-                  </div>
-                ))}
-              </div>
-              <div className="mega__foot">
-                <p>Not sure which trade you need? Browse by project instead.</p>
-                <a
-                  className="btn btn--outline btn--sm"
-                  href="#projects"
-                  onClick={() => {
-                    setActiveMenu(null);
-                    closeDirectory();
-                  }}
-                >
-                  Popular projects
-                </a>
-              </div>
-            </div>
-          </div>
-
           <div className="nav__item">
             <a
               className="nav__link"
-              href="#categories"
+              href="#featured-categories"
               onClick={() => closeDirectory()}
             >
-              Categories
+              Trades
             </a>
           </div>
           <div className="nav__item">
             <a
               className="nav__link"
-              href="#advice"
+              href="#how"
               onClick={() => closeDirectory()}
             >
-              Reviews &amp; Advice
+              How It Works
+            </a>
+          </div>
+          <div className="nav__item">
+            <a
+              className="nav__link"
+              href="#reviews"
+              onClick={() => closeDirectory()}
+            >
+              Reviews
+            </a>
+          </div>
+          <div className="nav__item">
+            <a
+              className="nav__link"
+              href="#service-area"
+              onClick={() => closeDirectory()}
+            >
+              Service Area
             </a>
           </div>
         </nav>

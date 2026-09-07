@@ -190,19 +190,29 @@ export function ProfileModal() {
       </div>
 
       <div className="modal__foot">
+        {pro.phone && (
+          <a
+            className="btn btn--phone"
+            href={pro.phoneHref || `tel:${pro.phone}`}
+            aria-label={`Call ${pro.name}`}
+          >
+            <PhoneIcon />
+            <span>Call {pro.phone}</span>
+          </a>
+        )}
         <button
           className="btn btn--primary"
           type="button"
-          onClick={() => openEstimate(pro.id)}
+          onClick={() => openContact(pro.id)}
         >
-          Request an Estimate
+          Drop Info to Contact
         </button>
         <button
           className="btn btn--outline"
           type="button"
-          onClick={() => openContact(pro.id)}
+          onClick={() => openEstimate(pro.id)}
         >
-          Contact
+          Detailed Estimate
         </button>
         <button
           className="btn btn--ghost"

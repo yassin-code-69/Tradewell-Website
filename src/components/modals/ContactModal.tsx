@@ -83,8 +83,8 @@ export function ContactModal() {
     <>
       <div className="modal__head">
         <div>
-          <h3 id="modalTitle">Contact {pro.name}</h3>
-          <p>Send a message through the directory. Free, with no obligation to hire.</p>
+          <h3 id="modalTitle">Drop Info to Contact {pro.name}</h3>
+          <p>Submit your project details below. {pro.name} will reach out to you promptly with a free estimate.</p>
         </div>
         <button className="modal__close" type="button" onClick={closeModal} aria-label="Close">
           <XMarkIcon />
@@ -92,28 +92,20 @@ export function ContactModal() {
       </div>
 
       <form className="modal__body" onSubmit={handleSubmit} noValidate>
-        <div className="notice">
-          <Icon name="shield" />
-          <span>
-            <strong>Prototype form.</strong> Nothing is transmitted, stored or sent to any business.
-          </span>
-        </div>
-        <div style={{ height: '18px' }} />
-
         <div className="field__row">
           <div className="field">
-            <label htmlFor="cName">Name *</label>
+            <label htmlFor="cName">Your Name *</label>
             <input
               id="cName"
               required
-              placeholder="Jane Doe"
+              placeholder="Full Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={error && !name.trim() ? 'err' : ''}
             />
           </div>
           <div className="field">
-            <label htmlFor="cPhone">Phone *</label>
+            <label htmlFor="cPhone">Phone Number *</label>
             <input
               id="cPhone"
               type="tel"
@@ -127,7 +119,7 @@ export function ContactModal() {
         </div>
 
         <div className="field">
-          <label htmlFor="cEmail">Email</label>
+          <label htmlFor="cEmail">Email Address</label>
           <input
             id="cEmail"
             type="email"
@@ -138,26 +130,27 @@ export function ContactModal() {
         </div>
 
         <div className="field">
-          <label htmlFor="cMessage">Message *</label>
+          <label htmlFor="cMessage">Project Details / Service Needed *</label>
           <textarea
             id="cMessage"
             required
-            placeholder="Tell them what you need and when."
+            rows={3}
+            placeholder={`Tell ${pro.name} what work you need done, your city/address, and preferred timeline.`}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             className={error && !message.trim() ? 'err' : ''}
           />
         </div>
 
-        <p className="form-note">* Required fields</p>
+        <p className="form-note">* Required fields — 100% free with no obligation to hire</p>
         {error && <p className="form-error">{error}</p>}
 
         <div className="modal__foot" style={{ padding: '18px 0 0', borderTop: '1px solid var(--line)', marginTop: '20px' }}>
           <button className="btn btn--primary" type="submit">
-            Send Message
+            Submit Info to {pro.name}
           </button>
           {pro.phone && (
-            <a className="btn btn--outline" href={pro.phoneHref || `tel:${pro.phone}`}>
+            <a className="btn btn--phone" href={pro.phoneHref || `tel:${pro.phone}`}>
               Call {pro.phone}
             </a>
           )}

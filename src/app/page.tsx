@@ -7,14 +7,10 @@ import { TopBar } from '@/components/layout/TopBar';
 import { Header } from '@/components/layout/Header';
 import { MobileDrawer } from '@/components/layout/MobileDrawer';
 import { HeroSection } from '@/components/home/HeroSection';
-import { PopularServicesSection } from '@/components/home/PopularServicesSection';
-import { PopularProjectsSection } from '@/components/home/PopularProjectsSection';
-import { CategoriesSection } from '@/components/home/CategoriesSection';
-import { RecommendedProsSection } from '@/components/home/RecommendedProsSection';
-import { TradeSections } from '@/components/home/TradeSections';
+import { CategoryShowcase } from '@/components/home/CategoryShowcase';
+import { ContractorSpotlight } from '@/components/home/ContractorSpotlight';
 import { HowItWorksSection } from '@/components/home/HowItWorksSection';
 import { ReviewsSection } from '@/components/home/ReviewsSection';
-import { AdviceArticlesSection } from '@/components/home/AdviceArticlesSection';
 import { ServiceAreaSection } from '@/components/home/ServiceAreaSection';
 import { JoinBand } from '@/components/home/JoinBand';
 import { Footer } from '@/components/layout/Footer';
@@ -48,18 +44,14 @@ function PageContent() {
         {/* Directory / Search Results */}
         {isDirectoryOpen && <DirectoryView />}
 
-        {/* Homepage Sections */}
+        {/* Streamlined Homepage Sections */}
         {!isDirectoryOpen && (
           <>
             <HeroSection />
-            <PopularServicesSection />
-            <PopularProjectsSection />
-            <CategoriesSection />
-            <RecommendedProsSection />
-            <TradeSections />
+            <CategoryShowcase />
+            <ContractorSpotlight />
             <HowItWorksSection />
             <ReviewsSection />
-            <AdviceArticlesSection />
             <ServiceAreaSection />
             <JoinBand />
           </>

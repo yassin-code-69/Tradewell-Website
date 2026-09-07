@@ -114,14 +114,14 @@ export function HeroSection() {
                 <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z" />
               </svg>
             </span>
-            <span><b>2,400+</b> local pros across 63 home service categories</span>
+            <span><b>14+</b> verified local pros across 5 core trade categories</span>
           </span>
 
-          <h1>Find the right professional for your next home project</h1>
+          <h1>Find the right professional for your next project</h1>
           <p className="hero__lead">
-            Search local pros by the work you actually need doing — roofing, plumbing, HVAC,
-            electrical, cleaning, landscaping and dozens more. Compare ratings and coverage,
-            then request an estimate.
+            Connect with vetted Arkansas contractors for Roofing, Home Repairs, Commercial HVAC,
+            Electrical, and Lawn & Garden. Compare ratings, click to call directly, or drop your info
+            for a fast, free estimate.
           </p>
 
           <form className="searchbox" id="searchForm" role="search" autoComplete="off" onSubmit={handleSearchSubmit}>
@@ -219,15 +219,15 @@ export function HeroSection() {
           </form>
 
           <div className="chips">
-            <span className="chips__label">Popular:</span>
-            {['Roofing', 'Plumbing', 'HVAC', 'Electrical', 'House Cleaning', 'Landscaping'].map((trade) => (
+            <span className="chips__label">Popular Trades:</span>
+            {['Roofing', 'Home repairs', 'HVAC (Commercial)', 'Electrical', 'Lawn/Garden'].map((trade) => (
               <button
                 key={trade}
                 className="chip"
                 type="button"
                 onClick={() => handleQuickSearch(trade)}
               >
-                {trade === 'House Cleaning' ? 'Cleaning' : trade}
+                {trade}
               </button>
             ))}
           </div>

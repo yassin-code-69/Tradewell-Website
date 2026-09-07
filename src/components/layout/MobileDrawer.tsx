@@ -68,35 +68,29 @@ export function MobileDrawer() {
         </div>
 
         <div className="drawer__body">
-          <button className="drawer__link" type="button" onClick={() => handleNavClick('#services')}>
-            Find Pros
-          </button>
-          <button className="drawer__link" type="button" onClick={() => handleNavClick('#services')}>
-            Services
-          </button>
-          <button className="drawer__link" type="button" onClick={() => handleNavClick('#categories')}>
-            Categories
-          </button>
-          <button className="drawer__link" type="button" onClick={() => handleNavClick('#advice')}>
-            Reviews &amp; Advice
-          </button>
-          <button className="drawer__link" type="button" onClick={() => handleNavClick('#service-area')}>
-            Service Area
+          <button className="drawer__link" type="button" onClick={() => handleNavClick('#featured-categories')}>
+            Featured Trades
           </button>
           <button className="drawer__link" type="button" onClick={() => handleNavClick('#how')}>
             How it works
           </button>
+          <button className="drawer__link" type="button" onClick={() => handleNavClick('#reviews')}>
+            Verified Reviews
+          </button>
+          <button className="drawer__link" type="button" onClick={() => handleNavClick('#service-area')}>
+            Service Area
+          </button>
 
-          <div className="drawer__group-title">Popular categories</div>
+          <div className="drawer__group-title">Core Trade Categories</div>
           <div id="drawerCats">
-            {CATEGORIES.slice(0, 10).map((c) => (
+            {CATEGORIES.slice(0, 5).map((c) => (
               <button
                 key={c.name}
                 className="drawer__link"
                 type="button"
                 onClick={() => handleQuickSearch(c.name)}
               >
-                <span>{c.name}</span>
+                <span>{c.name} ({c.pros} Pros)</span>
                 <ArrowIcon />
               </button>
             ))}

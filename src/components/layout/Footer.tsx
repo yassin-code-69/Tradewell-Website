@@ -9,13 +9,10 @@ export function Footer() {
 
   const servicesList = [
     'Roofing',
-    'Plumbing',
-    'HVAC',
+    'Home repairs',
+    'HVAC (Commercial)',
     'Electrical',
-    'House Cleaning',
-    'Landscaping',
-    'Painting',
-    'Handyman'
+    'Lawn/Garden'
   ];
 
   const handleLinkClick = (href: string) => {
