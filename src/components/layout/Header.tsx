@@ -15,9 +15,20 @@ export function Header() {
   } = useDirectory();
 
   const [activeMenu, setActiveMenu] = useState<'find' | 'services' | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
   const groups = Array.from(new Set(CATEGORIES.map((c) => c.group)));
+
+  // Scroll listener for sticky header styling
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close menus on outside click
   useEffect(() => {
@@ -47,7 +58,7 @@ export function Header() {
   };
 
   return (
-    <header className="header" ref={headerRef}>
+    <header className={`header ${isScrolled ? 'is-scrolled' : ''}`} ref={headerRef}>
       <div className="wrap header__inner">
         <a className="brand" href="#top" id="brandHome" onClick={handleBrandClick} aria-label={`${SITE.name} — home`}>
           <span className="brand__mark" aria-hidden="true">
