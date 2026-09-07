@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Tradewell - Find Trusted Home Service Professionals in Arkansas',
+  title: 'Trade Well Home',
   description: 'Tradewell is a home services directory for Arkansas homeowners. Compare local roofing, plumbing, HVAC, electrical, cleaning and landscaping professionals across 63 categories.',
   icons: {
     icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E3446'/%3E%3Cg fill='none' stroke='%23F5A623' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%23F5A623'/%3E%3Cpath d='M16 12.6V9.8M16 19.4v2.8M12.6 16H9.8M19.4 16h2.8'/%3E%3Ccircle cx='16' cy='7' r='2.2'/%3E%3Ccircle cx='16' cy='25' r='2.2'/%3E%3Ccircle cx='7' cy='16' r='2.2'/%3E%3Ccircle cx='25' cy='16' r='2.2'/%3E%3C/g%3E%3C/svg%3E",
