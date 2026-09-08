@@ -6,20 +6,21 @@ import { Icon, XMarkIcon } from '@/components/ui/Icons';
 import { useDirectory } from '@/context/DirectoryContext';
 
 export function ContactModal() {
-  const { activeProId, closeModal, showToast } = useDirectory();
+  const { activeProId, closeModal, showToast, submitLead, pros } = useDirectory();
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   if (!activeProId) return null;
-  const pro = byId(activeProId);
+  const pro = pros.find((p) => p.id === activeProId) || byId(activeProId);
   if (!pro) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const missing = [];
     if (!name.trim()) missing.push('a name');
@@ -32,8 +33,21 @@ export function ContactModal() {
     }
 
     setError('');
+    setIsSubmitting(true);
+    await submitLead({
+      name: name.trim(),
+      phone: phone.trim(),
+      email: email.trim(),
+      proId: pro.id,
+      proName: pro.name,
+      category: pro.category,
+      projectType: 'Drop Info to Contact',
+      notes: message.trim(),
+      source: 'contact_modal'
+    });
+    setIsSubmitting(false);
     setIsSuccess(true);
-    showToast('Request captured — prototype only');
+    showToast(`Inquiry sent to ${pro.name}`);
   };
 
   if (isSuccess) {
@@ -64,10 +78,7 @@ export function ContactModal() {
             </svg>
           </div>
           <p style={{ color: 'var(--muted)', fontSize: '15.5px', maxWidth: '46ch', margin: '0 auto 16px' }}>
-            The professional will be contacted through the information provided.
-          </p>
-          <p className="form-note" style={{ maxWidth: '46ch', margin: '0 auto' }}>
-            This is a prototype — nothing was actually sent to {pro.name}.
+            Your inquiry has been successfully delivered. {pro.name} will reach out to you promptly with project details.
           </p>
         </div>
         <div className="modal__foot">

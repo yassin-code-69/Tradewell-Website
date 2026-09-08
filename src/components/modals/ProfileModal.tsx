@@ -17,10 +17,10 @@ import {
 import { useDirectory } from '@/context/DirectoryContext';
 
 export function ProfileModal() {
-  const { activeProId, closeModal, openEstimate, openContact } = useDirectory();
+  const { activeProId, closeModal, openEstimate, openContact, pros } = useDirectory();
 
   if (!activeProId) return null;
-  const pro = byId(activeProId);
+  const pro = pros.find((p) => p.id === activeProId) || byId(activeProId);
   if (!pro) return null;
 
   const gallery = galleryFor(pro);
@@ -48,6 +48,11 @@ export function ProfileModal() {
                   ? `${pro.reviews} reviews`
                   : 'Rating from public profile'}
               </span>
+              {pro.tradewellScore && (
+                <span className="pro-card__score" style={{ fontSize: '13.5px' }}>
+                  Tradewell Score: <b>{pro.tradewellScore}/100</b>
+                </span>
+              )}
               {isTopRated(pro) && (
                 <span className="badge badge--top">Top rated</span>
               )}

@@ -8,7 +8,7 @@ import { useDirectory } from '@/context/DirectoryContext';
 
 export function CategoryShowcase() {
   const [activeTab, setActiveTab] = useState<string>('all');
-  const { openDirectory } = useDirectory();
+  const { openDirectory, pros } = useDirectory();
 
   const categoriesToShow =
     activeTab === 'all'
@@ -52,10 +52,10 @@ export function CategoryShowcase() {
               <rect x="14" y="14" width="7" height="7" rx="1.5" />
               <rect x="3" y="14" width="7" height="7" rx="1.5" />
             </svg>
-            <span>All Categories ({PROS.length})</span>
+            <span>All Categories ({pros.length})</span>
           </button>
           {CORE_CATEGORIES.map((cat) => {
-            const count = PROS.filter(
+            const count = pros.filter(
               (p) => p.category === cat.name || p.categories.includes(cat.name)
             ).length;
             return (
@@ -77,7 +77,7 @@ export function CategoryShowcase() {
         {/* Categories & Pros Showcase */}
         <div className="space-y-16">
           {categoriesToShow.map((cat) => {
-            const catPros = PROS.filter(
+            const catPros = pros.filter(
               (p) => p.category === cat.name || p.categories.includes(cat.name)
             );
 

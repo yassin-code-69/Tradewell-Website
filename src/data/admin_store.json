@@ -1,0 +1,582 @@
+{
+  "pros": [
+    {
+      "id": "valor-roofing",
+      "name": "Valor Roofing LLC",
+      "demo": false,
+      "featured": true,
+      "tradewellScore": 99,
+      "category": "Roofing",
+      "categories": [
+        "Roofing",
+        "Home repairs",
+        "Roof Repair",
+        "Roof Replacement",
+        "Storm Damage Repair",
+        "Gutters",
+        "Siding"
+      ],
+      "services": [
+        "Roof Repair",
+        "Complete Roof Replacement",
+        "Storm Damage Inspection",
+        "Gutters",
+        "Exterior Repairs"
+      ],
+      "rating": 5,
+      "reviews": 48,
+      "ratingOnly": false,
+      "city": "Northeast & Central Arkansas",
+      "area": "Craighead, White, Pulaski & Lonoke Counties",
+      "covers": [
+        "Jonesboro",
+        "Paragould",
+        "Newport",
+        "Wynne",
+        "Trumann",
+        "Harrisburg",
+        "Marked Tree",
+        "Blytheville",
+        "Walnut Ridge",
+        "Pocahontas",
+        "Batesville",
+        "Searcy",
+        "Cabot",
+        "Beebe",
+        "Bald Knob",
+        "Conway",
+        "Heber Springs",
+        "Little Rock",
+        "North Little Rock",
+        "Sherwood",
+        "Jacksonville",
+        "Benton"
+      ],
+      "phone": "+1 870-316-8800",
+      "phoneHref": "tel:+18703168800",
+      "initials": "VR",
+      "accent": "#B8402C",
+      "responds": "Typically responds same day",
+      "blurb": "Premier roofing installations, full replacements, storm restoration and home repairs across Arkansas.",
+      "about": "Valor Roofing LLC is Arkansas’s trusted roofing contractor serving homeowners throughout Northeast and Central Arkansas. Specializing in leak diagnosis, architectural shingle replacement, high-wind storm restoration, gutters and envelope home repairs."
+    },
+    {
+      "id": "charles-sharp-roofing",
+      "name": "Charles Sharp Roofing",
+      "demo": false,
+      "tradewellScore": 98,
+      "category": "Roofing",
+      "categories": [
+        "Roofing",
+        "Roof Repair",
+        "Roof Replacement",
+        "Gutters"
+      ],
+      "services": [
+        "Residential Roofing",
+        "Leak Repair",
+        "Shingle Replacement",
+        "Seamless Gutters"
+      ],
+      "rating": 4.9,
+      "reviews": 142,
+      "city": "Jonesboro, AR",
+      "area": "Craighead County & Northeast AR",
+      "covers": [
+        "Jonesboro",
+        "Paragould",
+        "Trumann",
+        "Harrisburg",
+        "Blytheville",
+        "Newport"
+      ],
+      "initials": "CS",
+      "accent": "#1D6E8E",
+      "responds": "Responds in about 1 hour",
+      "blurb": "Dedicated residential roofing installations, shingle repair, and custom gutter systems.",
+      "about": "Charles Sharp Roofing has proudly served Arkansas homeowners with high-quality roof repairs, full roof replacements, and prompt storm damage assessments."
+    },
+    {
+      "id": "chase-robertson-roofing",
+      "name": "Chase Robertson Roofing",
+      "demo": false,
+      "tradewellScore": 96,
+      "category": "Roofing",
+      "categories": [
+        "Roofing",
+        "Roof Replacement",
+        "Metal Roofing",
+        "Storm Damage Repair"
+      ],
+      "services": [
+        "Architectural Shingles",
+        "Standing Seam Metal",
+        "Storm Inspection",
+        "Reroofing"
+      ],
+      "rating": 4.8,
+      "reviews": 118,
+      "city": "Searcy, AR",
+      "area": "White County & Central AR",
+      "covers": [
+        "Searcy",
+        "Beebe",
+        "Bald Knob",
+        "Cabot",
+        "Heber Springs",
+        "Conway"
+      ],
+      "initials": "CR",
+      "accent": "#2F7A4E",
+      "responds": "Responds in about 2 hours",
+      "blurb": "Quality metal and shingle roofing systems engineered for Arkansas climate.",
+      "about": "Chase Robertson Roofing specializes in durable residential roofing solutions, from emergency storm damage repair to architectural shingle installations."
+    },
+    {
+      "id": "prime-roofing",
+      "name": "Prime Roofing",
+      "demo": false,
+      "tradewellScore": 97,
+      "category": "Roofing",
+      "categories": [
+        "Roofing",
+        "Roof Repair",
+        "Commercial Roofing",
+        "Gutters"
+      ],
+      "services": [
+        "Complete Reroof",
+        "Roof Inspections",
+        "Flat Roofing",
+        "Gutters & Downspouts"
+      ],
+      "rating": 4.8,
+      "reviews": 164,
+      "city": "Little Rock, AR",
+      "area": "Pulaski County & Metro Area",
+      "covers": [
+        "Little Rock",
+        "North Little Rock",
+        "Sherwood",
+        "Benton",
+        "Conway",
+        "Jacksonville"
+      ],
+      "initials": "PR",
+      "accent": "#6B4E9B",
+      "responds": "Responds in about 3 hours",
+      "blurb": "Comprehensive residential and light commercial roofing contractor.",
+      "about": "Prime Roofing provides premium roofing replacements, high-wind shingle installations, and fast leak repairs across Central Arkansas."
+    },
+    {
+      "id": "markley-construction",
+      "name": "Markley Construction Inc",
+      "demo": false,
+      "tradewellScore": 98,
+      "category": "Home repairs",
+      "categories": [
+        "Home repairs",
+        "General Contractors",
+        "Drywall",
+        "Carpentry"
+      ],
+      "services": [
+        "Structural Repairs",
+        "Finish Carpentry",
+        "Drywall Repair",
+        "Home Renovations"
+      ],
+      "rating": 4.9,
+      "reviews": 135,
+      "city": "Cabot, AR",
+      "area": "Lonoke County & Central AR",
+      "covers": [
+        "Cabot",
+        "Jacksonville",
+        "Sherwood",
+        "Beebe",
+        "Little Rock"
+      ],
+      "initials": "MC",
+      "accent": "#B5761F",
+      "responds": "Responds in about 2 hours",
+      "blurb": "General home repairs, structural carpentry, and turnkey residential improvements.",
+      "about": "Markley Construction Inc delivers reliable home repair solutions including framing, rot repair, interior patching, and exterior envelope fixes."
+    },
+    {
+      "id": "fuller-construction",
+      "name": "Fuller Construction",
+      "demo": false,
+      "category": "Home repairs",
+      "categories": [
+        "Home repairs",
+        "Handyman",
+        "Remodeling",
+        "Siding"
+      ],
+      "services": [
+        "Home Maintenance",
+        "Siding Repair",
+        "Door & Window Trim",
+        "Deck Repairs"
+      ],
+      "rating": 4.8,
+      "reviews": 98,
+      "city": "Conway, AR",
+      "area": "Faulkner County",
+      "covers": [
+        "Conway",
+        "Greenbrier",
+        "Little Rock",
+        "Maumelle"
+      ],
+      "initials": "FC",
+      "accent": "#46586A",
+      "responds": "Responds in about 3 hours",
+      "blurb": "Expert residential construction, punch-list repairs, and exterior maintenance.",
+      "about": "Fuller Construction assists homeowners with essential structural repairs, siding patching, deck refurbishments, and general carpentry.",
+      "tradewellScore": 95
+    },
+    {
+      "id": "townsend-heat-air",
+      "name": "Townsend Heat and Air",
+      "demo": false,
+      "category": "HVAC (Commercial)",
+      "categories": [
+        "HVAC (Commercial)",
+        "HVAC",
+        "AC Repair",
+        "Commercial Heating"
+      ],
+      "services": [
+        "Commercial HVAC",
+        "Rooftop Units",
+        "Chillers & Heat Pumps",
+        "Preventative Maintenance"
+      ],
+      "rating": 4.9,
+      "reviews": 176,
+      "city": "Jonesboro, AR",
+      "area": "Craighead County & Northeast AR",
+      "covers": [
+        "Jonesboro",
+        "Paragould",
+        "Trumann",
+        "Newport",
+        "Blytheville"
+      ],
+      "initials": "TH",
+      "accent": "#D9534F",
+      "responds": "Responds in about 1 hour",
+      "blurb": "Full-service commercial and residential heating, cooling, and ventilation systems.",
+      "about": "Townsend Heat and Air is a premier HVAC contractor handling commercial packaged rooftop units, split system repairs, duct design, and emergency cooling.",
+      "tradewellScore": 98
+    },
+    {
+      "id": "prestige-heating-cooling",
+      "name": "Prestige Heating and Cooling",
+      "demo": false,
+      "category": "HVAC (Commercial)",
+      "categories": [
+        "HVAC (Commercial)",
+        "HVAC",
+        "Furnace Repair",
+        "Air Conditioning"
+      ],
+      "services": [
+        "Commercial Air Conditioning",
+        "Heating Repair",
+        "Ventilation",
+        "System Replacements"
+      ],
+      "rating": 4.8,
+      "reviews": 149,
+      "city": "Little Rock, AR",
+      "area": "Pulaski County & Metro Area",
+      "covers": [
+        "Little Rock",
+        "North Little Rock",
+        "Benton",
+        "Bryant",
+        "Sherwood"
+      ],
+      "initials": "PH",
+      "accent": "#2C7A8C",
+      "responds": "Responds in about 2 hours",
+      "blurb": "High-efficiency commercial HVAC installations and rapid emergency cooling repair.",
+      "about": "Prestige Heating and Cooling specializes in commercial climate control, energy-efficient heat pump systems, and industrial HVAC maintenance.",
+      "tradewellScore": 96
+    },
+    {
+      "id": "jasons-heat-air",
+      "name": "Jason’s Heat and Air",
+      "demo": false,
+      "category": "HVAC (Commercial)",
+      "categories": [
+        "HVAC (Commercial)",
+        "HVAC",
+        "AC Repair",
+        "Heat Pumps"
+      ],
+      "services": [
+        "Commercial Maintenance",
+        "AC Tune-Ups",
+        "Gas Furnaces",
+        "Ductless Mini-Splits"
+      ],
+      "rating": 4.9,
+      "reviews": 122,
+      "city": "Searcy, AR",
+      "area": "White County",
+      "covers": [
+        "Searcy",
+        "Beebe",
+        "Bald Knob",
+        "Heber Springs",
+        "Cabot"
+      ],
+      "initials": "JH",
+      "accent": "#E2582F",
+      "responds": "Responds in about 2 hours",
+      "blurb": "Dependable commercial & residential HVAC diagnostics, installations, and repairs.",
+      "about": "Jason’s Heat and Air provides honest, expert service for commercial offices, retail buildings, and homes across White County and beyond.",
+      "tradewellScore": 97
+    },
+    {
+      "id": "mws-electrical",
+      "name": "MWS Electrical",
+      "demo": false,
+      "category": "Electrical",
+      "categories": [
+        "Electrical",
+        "Commercial Electrical",
+        "Panel Upgrades",
+        "Generators"
+      ],
+      "services": [
+        "Commercial Wiring",
+        "Service Panel Upgrades",
+        "Lighting Retrofits",
+        "Generator Installs"
+      ],
+      "rating": 4.9,
+      "reviews": 154,
+      "city": "Jonesboro, AR",
+      "area": "Craighead County & Northeast AR",
+      "covers": [
+        "Jonesboro",
+        "Paragould",
+        "Trumann",
+        "Harrisburg",
+        "Blytheville"
+      ],
+      "initials": "MW",
+      "accent": "#F5A623",
+      "responds": "Responds in about 1 hour",
+      "blurb": "Master licensed electricians delivering commercial power, lighting, and safety upgrades.",
+      "about": "MWS Electrical handles full electrical builds, code compliance inspections, high-voltage equipment hookups, and backup generator systems.",
+      "tradewellScore": 99
+    },
+    {
+      "id": "wilkins-electrical",
+      "name": "Wilkins Electrical",
+      "demo": false,
+      "category": "Electrical",
+      "categories": [
+        "Electrical",
+        "Commercial Wiring",
+        "EV Chargers",
+        "Safety Inspections"
+      ],
+      "services": [
+        "Commercial Circuits",
+        "Breaker Panels",
+        "EV Charger Install",
+        "Troubleshooting"
+      ],
+      "rating": 4.8,
+      "reviews": 116,
+      "city": "Cabot, AR",
+      "area": "Lonoke County & Central AR",
+      "covers": [
+        "Cabot",
+        "Jacksonville",
+        "Sherwood",
+        "Little Rock",
+        "Beebe"
+      ],
+      "initials": "WE",
+      "accent": "#B5761F",
+      "responds": "Responds in about 2 hours",
+      "blurb": "Precision electrical contracting for commercial facilities and modern residences.",
+      "about": "Wilkins Electrical provides prompt electrical troubleshooting, heavy-up panel replacements, and commercial lighting installations.",
+      "tradewellScore": 96
+    },
+    {
+      "id": "lacey-turf-property",
+      "name": "Lacey Turf and Property Services",
+      "demo": false,
+      "category": "Lawn/Garden",
+      "categories": [
+        "Lawn/Garden",
+        "Landscaping",
+        "Lawn Care",
+        "Weed Control"
+      ],
+      "services": [
+        "Turf Management",
+        "Weed & Feed Programs",
+        "Commercial Grounds Care",
+        "Aeration & Seeding"
+      ],
+      "rating": 4.9,
+      "reviews": 148,
+      "city": "Jonesboro, AR",
+      "area": "Craighead County & Northeast AR",
+      "covers": [
+        "Jonesboro",
+        "Paragould",
+        "Brookland",
+        "Trumann"
+      ],
+      "initials": "LT",
+      "accent": "#2F7A4E",
+      "responds": "Responds in about 2 hours",
+      "blurb": "Specialized turf care, weed control programs, and commercial grounds maintenance.",
+      "about": "Lacey Turf and Property Services turns Arkansas lawns into lush, healthy green turf with professional fertilization, weed control, and property upkeep.",
+      "tradewellScore": 97
+    },
+    {
+      "id": "tj-lawn-service",
+      "name": "T&J lawn Service",
+      "demo": false,
+      "category": "Lawn/Garden",
+      "categories": [
+        "Lawn/Garden",
+        "Lawn Care",
+        "Mowing",
+        "Seasonal Cleanups"
+      ],
+      "services": [
+        "Scheduled Mowing",
+        "Edging & Trimming",
+        "Leaf Removal",
+        "Mulching & Bed Care"
+      ],
+      "rating": 4.8,
+      "reviews": 92,
+      "city": "Searcy, AR",
+      "area": "White County",
+      "covers": [
+        "Searcy",
+        "Beebe",
+        "Bald Knob",
+        "Kensett"
+      ],
+      "initials": "TJ",
+      "accent": "#3F8442",
+      "responds": "Responds in about 3 hours",
+      "blurb": "Reliable weekly lawn mowing, precision edging, and seasonal yard cleanups.",
+      "about": "T&J lawn Service keeps residential and commercial properties impeccably manicured with dependable scheduling and detail-oriented yard care.",
+      "tradewellScore": 95
+    },
+    {
+      "id": "salinas-lawn-landscape",
+      "name": "Salina’s lawn and landscape",
+      "demo": false,
+      "category": "Lawn/Garden",
+      "categories": [
+        "Lawn/Garden",
+        "Landscaping",
+        "Hardscape",
+        "Irrigation"
+      ],
+      "services": [
+        "Landscape Design",
+        "Sod Installation",
+        "Mulch & Rock Beds",
+        "Drainage Solutions"
+      ],
+      "rating": 4.9,
+      "reviews": 167,
+      "city": "Little Rock, AR",
+      "area": "Pulaski County & Metro Area",
+      "covers": [
+        "Little Rock",
+        "North Little Rock",
+        "Benton",
+        "Bryant",
+        "Sherwood",
+        "Maumelle"
+      ],
+      "initials": "SL",
+      "accent": "#2E8B6B",
+      "responds": "Responds in about 2 hours",
+      "blurb": "Complete landscape design, sod laying, stone flowerbeds, and seasonal grounds care.",
+      "about": "Salina’s lawn and landscape provides high-end landscaping, outdoor transformations, French drains, and recurring lawn maintenance.",
+      "tradewellScore": 98
+    }
+  ],
+  "spotlight": {
+    "activeProId": "valor-roofing",
+    "projectTitle": "Architectural Shingle Replacement & Gutters",
+    "projectLocation": "Jonesboro & Craighead County, AR",
+    "projectImage": "/assets/img/roof-replacement.jpg",
+    "editorialNote": "Valor Roofing LLC was selected for this week’s spotlight following outstanding homeowner reports during the recent severe weather season. From same-day emergency roof inspections and transparent insurance estimates to complete architectural shingle replacements completed within 48 hours, Valor sets the benchmark for Arkansas roofing standards.",
+    "reviewQuote": "Valor Roofing responded immediately when our roof began leaking after a storm. They gave an honest written quote, worked directly with our insurance adjuster, and completed the full roof in a single day. Flawless work.",
+    "reviewAuthor": "Marcus T., Jonesboro homeowner (Verified Customer)",
+    "updatedAt": "Updated for this week"
+  },
+  "leads": [
+    {
+      "id": "lead-1788869077847-u8zzz",
+      "name": "Robert Davis",
+      "phone": "(870) 555-9922",
+      "email": "robert.davis@gmail.com",
+      "address": "",
+      "city": "Jonesboro",
+      "proId": "valor-roofing",
+      "proName": "Valor Roofing LLC",
+      "category": "Home Services",
+      "projectType": "Drop Info to Contact",
+      "notes": "Need roof inspection after high winds yesterday.",
+      "source": "contact_modal",
+      "status": "new",
+      "createdAt": "2026-09-08T12:04:37.847Z"
+    },
+    {
+      "id": "lead-sample-1",
+      "name": "James Henderson",
+      "phone": "(870) 555-0143",
+      "email": "jhenderson@gmail.com",
+      "city": "Jonesboro, AR",
+      "proId": "valor-roofing",
+      "proName": "Valor Roofing LLC",
+      "category": "Roofing",
+      "projectType": "Storm Damage Inspection & Estimate",
+      "notes": "Roof has shingle loss on south slope following hail storm. Need estimate for insurance adjuster.",
+      "source": "contact_modal",
+      "status": "new",
+      "createdAt": "2026-09-08T08:04:31.797Z"
+    },
+    {
+      "id": "lead-sample-2",
+      "name": "Sarah Jenkins",
+      "phone": "(501) 555-8821",
+      "email": "s.jenkins@yahoo.com",
+      "city": "Searcy, AR",
+      "proId": "jasons-heat-air",
+      "proName": "Jason’s Heat and Air",
+      "category": "HVAC (Commercial)",
+      "projectType": "Commercial Rooftop AC Service",
+      "notes": "Unit 2 compressor not cooling warehouse floor. Looking for same-day or next-day diagnostic.",
+      "source": "estimate_modal",
+      "status": "contacted",
+      "createdAt": "2026-09-07T10:04:31.797Z"
+    }
+  ],
+  "settings": {
+    "passcode": "tradewell2026",
+    "lastUpdated": "2026-09-08T12:28:42.329Z"
+  }
+}

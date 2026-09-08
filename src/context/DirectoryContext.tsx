@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
+import React, { createContext, useContext, useState, useMemo, useEffect, useCallback } from 'react';
 import {
   PROS,
   Pro,
@@ -8,6 +8,7 @@ import {
   CITIES,
   norm
 } from '@/data/tradewell';
+import { SpotlightConfig, DEFAULT_SPOTLIGHT } from '@/lib/adminTypes';
 
 export type SortOption = 'recommended' | 'rating' | 'reviews' | 'name';
 export type ModalType = 'profile' | 'estimate' | 'contact' | 'join' | null;
@@ -15,6 +16,20 @@ export type ModalType = 'profile' | 'estimate' | 'contact' | 'join' | null;
 interface ScoredPro {
   pro: Pro;
   score: number;
+}
+
+export interface NewLeadInput {
+  name: string;
+  phone: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  proId?: string;
+  proName?: string;
+  category?: string;
+  projectType?: string;
+  notes?: string;
+  source?: 'contact_modal' | 'estimate_modal' | 'join_modal';
 }
 
 interface DirectoryContextType {
@@ -38,7 +53,10 @@ interface DirectoryContextType {
   resetFilters: () => void;
   clearFilter: (filterKey: 'category' | 'city' | 'rating' | 'fast') => void;
 
+  pros: Pro[];
+  spotlight: SpotlightConfig;
   results: ScoredPro[];
+  submitLead: (input: NewLeadInput) => Promise<boolean>;
 
   modalType: ModalType;
   activeProId: string | null;
@@ -76,10 +94,32 @@ export function DirectoryProvider({ children }: { children: React.ReactNode }) {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  // Compute filtered & sorted results
+  // Dynamic pros and spotlight fetched from admin database
+  const [pros, setPros] = useState<Pro[]>(PROS);
+  const [spotlight, setSpotlight] = useState<SpotlightConfig>(DEFAULT_SPOTLIGHT);
+
+  // Load live data from /api/admin/data
+  const refreshData = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/data');
+      const data = await res.json();
+      if (data.success) {
+        if (data.pros && data.pros.length > 0) setPros(data.pros);
+        if (data.spotlight) setSpotlight(data.spotlight);
+      }
+    } catch {
+      // Graceful fallback to initial values
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshData();
+  }, [refreshData]);
+
+  // Compute filtered & sorted results using dynamic pros
   const results = useMemo(() => {
     // 1. Score
-    const scored = PROS.map((p) => ({
+    const scored = pros.map((p) => ({
       pro: p,
       score: scorePro(p, term, city)
     })).filter((r) => r.score > 0);
@@ -107,7 +147,7 @@ export function DirectoryProvider({ children }: { children: React.ReactNode }) {
     }
 
     return sorted;
-  }, [term, city, category, minRating, fast, sort]);
+  }, [pros, term, city, category, minRating, fast, sort]);
 
   const openDirectory = (searchQuery?: string, searchCity?: string) => {
     if (searchQuery !== undefined) setTerm(searchQuery);
@@ -148,7 +188,6 @@ export function DirectoryProvider({ children }: { children: React.ReactNode }) {
   const handleCityClick = (cityName: string) => {
     const cleanCity = cityName.split(',')[0].trim();
     setCity(cleanCity);
-    setIsDrawerOpen(false);
     openDirectory(term, cleanCity);
   };
 
@@ -178,24 +217,48 @@ export function DirectoryProvider({ children }: { children: React.ReactNode }) {
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage((prev) => (prev === msg ? null : prev));
-    }, 3600);
   };
+
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => {
+        setToastMessage(null);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
 
-  // Lock body when modal or drawer is open
+  // Submit Lead to API
+  const submitLead = async (input: NewLeadInput): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input)
+      });
+      const data = await res.json();
+      return !!data.success;
+    } catch {
+      return false;
+    }
+  };
+
+  // Lock body when modal is open
   useEffect(() => {
     if (modalType || isDrawerOpen) {
       document.body.classList.add('is-locked');
     } else {
       document.body.classList.remove('is-locked');
     }
+    return () => {
+      document.body.classList.remove('is-locked');
+    };
   }, [modalType, isDrawerOpen]);
 
-  // Handle escape key
+  // Handle ESC key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -227,7 +290,10 @@ export function DirectoryProvider({ children }: { children: React.ReactNode }) {
         setSort,
         resetFilters,
         clearFilter,
+        pros,
+        spotlight,
         results,
+        submitLead,
         modalType,
         activeProId,
         openProfile,

@@ -2,13 +2,16 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { PROS } from '@/data/tradewell';
 import { StarRating, PinIcon, PhoneIcon } from '@/components/ui/Icons';
 import { useDirectory } from '@/context/DirectoryContext';
 
 export function ContractorSpotlight() {
-  const { openContact, openProfile } = useDirectory();
-  const valorPro = PROS.find((p) => p.id === 'valor-roofing') || PROS[0];
+  const { openContact, openProfile, pros, spotlight } = useDirectory();
+  const featuredPro = pros.find((p) => p.id === spotlight?.activeProId) || pros[0];
+
+  if (!featuredPro) return null;
+
+  const isValor = featuredPro.id.startsWith('valor-roofing') || !!featuredPro.phoneHref;
 
   return (
     <section className="section section--surface border-y border-[var(--line)]" id="spotlight">
@@ -23,7 +26,7 @@ export function ContractorSpotlight() {
             </p>
           </div>
           <span className="pro-card__respond" style={{ fontSize: '13px' }}>
-            Updated for this week
+            {spotlight?.updatedAt || 'Updated for this week'}
           </span>
         </div>
 
@@ -33,8 +36,8 @@ export function ContractorSpotlight() {
           <div className="spotlight-card__media">
             <div className="spotlight-card__img-wrap">
               <Image
-                src="/assets/img/roof-replacement.jpg"
-                alt="Valor Roofing LLC architectural shingle replacement project in Arkansas"
+                src={spotlight?.projectImage || '/assets/img/roof-replacement.jpg'}
+                alt={`${featuredPro.name} featured project in Arkansas`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 900px) 100vw, 440px"
@@ -45,10 +48,10 @@ export function ContractorSpotlight() {
                 Recent Project
               </span>
               <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--ink)', fontFamily: 'var(--display)' }}>
-                Architectural Shingle Replacement & Gutters
+                {spotlight?.projectTitle || 'Architectural Shingle Replacement & Gutters'}
               </div>
               <div style={{ fontSize: '13px', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '5px', marginTop: '4px' }}>
-                <PinIcon /> Jonesboro & Craighead County, AR
+                <PinIcon /> {spotlight?.projectLocation || `${featuredPro.city}, AR`}
               </div>
             </div>
           </div>
@@ -57,62 +60,85 @@ export function ContractorSpotlight() {
           <div className="spotlight-card__body">
             <div>
               <div className="pro-card__head">
-                <h3 className="pro-card__name" style={{ fontSize: '26px' }}>{valorPro.name}</h3>
+                <h3 className="pro-card__name" style={{ fontSize: '26px' }}>{featuredPro.name}</h3>
                 <span className="badge badge--top">Featured Pro</span>
               </div>
 
               <div className="pro-card__row" style={{ marginTop: '8px' }}>
                 <span className="pro-card__rating">
-                  <StarRating rating={valorPro.rating} />
-                  <span className="num">{valorPro.rating.toFixed(1)}</span>
-                  <span className="cnt">({valorPro.reviews} verified reviews)</span>
+                  <StarRating rating={featuredPro.rating} />
+                  <span className="num">{featuredPro.rating.toFixed(1)}</span>
+                  <span className="cnt">({featuredPro.reviews} verified reviews)</span>
                 </span>
                 <span className="pro-card__score">
-                  Tradewell Score: <b>{valorPro.tradewellScore || 99}/100</b>
+                  Tradewell Score: <b>{featuredPro.tradewellScore || 99}/100</b>
                 </span>
                 <span className="pro-card__loc">
-                  <PinIcon /> {valorPro.city}
+                  <PinIcon /> {featuredPro.city}
                 </span>
-                <span className="pro-card__respond">{valorPro.responds}</span>
+                <span className="pro-card__respond">{featuredPro.responds}</span>
               </div>
 
               <p className="spotlight-card__story">
-                {valorPro.name} was selected for this week&apos;s spotlight following outstanding homeowner reports during the recent severe weather season. From same-day emergency roof inspections and transparent insurance estimates to complete architectural shingle replacements completed within 48 hours, Valor sets the benchmark for Arkansas roofing standards.
+                {spotlight?.editorialNote ||
+                  `${featuredPro.name} was selected for this week's spotlight following outstanding homeowner reports during the recent severe weather season. From emergency inspections and transparent estimates to prompt turnaround, they continue to set the benchmark for Arkansas standards.`}
               </p>
 
               <div className="spotlight-card__quote">
                 <blockquote>
-                  &ldquo;Valor Roofing responded immediately when our roof began leaking after a storm. They gave an honest written quote, worked directly with our insurance adjuster, and completed the full roof in a single day. Flawless work.&rdquo;
+                  &ldquo;{spotlight?.reviewQuote ||
+                    'They responded immediately when our home needed repairs after a storm. Honest written quote, worked smoothly, and completed the job cleanly. Flawless work.'}&rdquo;
                 </blockquote>
                 <div className="spotlight-card__quote-author">
-                  — Marcus T., Jonesboro homeowner (Verified Customer)
+                  — {spotlight?.reviewAuthor || 'Verified Arkansas Homeowner'}
                 </div>
               </div>
             </div>
 
             <div className="spotlight-card__actions">
-              <a
-                className="btn btn--phone"
-                href={valorPro.phoneHref || 'tel:+18703168800'}
-                aria-label={`Call ${valorPro.name} at (870) 316-8800`}
-              >
-                <PhoneIcon />
-                <span>Call (870) 316-8800</span>
-              </a>
-              <button
-                className="btn btn--primary"
-                type="button"
-                onClick={() => openContact(valorPro.id)}
-              >
-                Send Info for Free Estimate
-              </button>
-              <button
-                className="btn btn--outline"
-                type="button"
-                onClick={() => openProfile(valorPro.id)}
-              >
-                View Profile
-              </button>
+              {isValor ? (
+                <>
+                  <a
+                    className="btn btn--phone"
+                    href={featuredPro.phoneHref || 'tel:+18703168800'}
+                    aria-label={`Call ${featuredPro.name} at (870) 316-8800`}
+                  >
+                    <PhoneIcon />
+                    <span>Call (870) 316-8800</span>
+                  </a>
+                  <button
+                    className="btn btn--primary"
+                    type="button"
+                    onClick={() => openContact(featuredPro.id)}
+                  >
+                    Send Info for Free Estimate
+                  </button>
+                  <button
+                    className="btn btn--outline"
+                    type="button"
+                    onClick={() => openProfile(featuredPro.id)}
+                  >
+                    View Profile
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="btn btn--primary"
+                    type="button"
+                    onClick={() => openContact(featuredPro.id)}
+                  >
+                    Drop Info to Contact
+                  </button>
+                  <button
+                    className="btn btn--outline"
+                    type="button"
+                    onClick={() => openProfile(featuredPro.id)}
+                  >
+                    View Profile
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </article>
