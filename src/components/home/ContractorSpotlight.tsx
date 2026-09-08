@@ -60,8 +60,21 @@ export function ContractorSpotlight() {
           <div className="spotlight-card__body">
             <div>
               <div className="pro-card__head">
-                <h3 className="pro-card__name" style={{ fontSize: '26px' }}>{featuredPro.name}</h3>
-                <span className="badge badge--top">Featured Pro</span>
+                {(featuredPro.logo || isValor) && (
+                  <div className="relative w-11 h-11 rounded-lg overflow-hidden border border-[var(--line)] bg-[#F4EFEA] flex-none p-0.5 shadow-2xs">
+                    <Image
+                      src={featuredPro.logo || '/assets/img/valor-roofing-logo.png'}
+                      alt={featuredPro.name}
+                      fill
+                      className="object-contain p-0.5"
+                      sizes="44px"
+                    />
+                  </div>
+                )}
+                <div>
+                  <h3 className="pro-card__name" style={{ fontSize: '26px' }}>{featuredPro.name}</h3>
+                  <span className="badge badge--top">Featured Pro</span>
+                </div>
               </div>
 
               <div className="pro-card__row" style={{ marginTop: '8px' }}>

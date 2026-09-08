@@ -77,6 +77,8 @@ export interface Pro {
   covers: string[];
   phone?: string;
   phoneHref?: string;
+  logo?: string;
+  gallery?: string[];
   initials: string;
   accent: string;
   responds: string;
@@ -265,6 +267,7 @@ export const PROS: Pro[] = [
     name: 'Valor Roofing LLC',
     demo: false,
     featured: true,
+    logo: '/assets/img/valor-roofing-logo.png',
     tradewellScore: 99,
     category: 'Roofing',
     categories: ['Roofing', 'Home repairs', 'Roof Repair', 'Roof Replacement', 'Storm Damage Repair', 'Gutters', 'Siding'],
@@ -720,7 +723,10 @@ export function reviewsFor(pro: Pro): ReviewItem[] {
 }
 
 export const byId = (id: string): Pro | undefined => PROS.find((p) => p.id === id);
-export const galleryFor = (pro: Pro): string[] => IMAGES[pro.category] || IMAGES[pro.categories[0]] || IMAGES.Roofing;
+export const galleryFor = (pro: Pro): string[] =>
+  pro.gallery && pro.gallery.length > 0
+    ? pro.gallery
+    : IMAGES[pro.category] || IMAGES[pro.categories[0]] || IMAGES.Roofing;
 export const isTopRated = (pro: Pro): boolean => pro.rating >= 4.9;
 export const isFast = (pro: Pro): boolean => /hour|same day/i.test(pro.responds);
 

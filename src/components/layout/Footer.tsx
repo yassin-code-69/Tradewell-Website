@@ -110,16 +110,7 @@ export function Footer() {
         </div>
 
         <div className="footer__bottom" id="legal">
-          <p className="footer__legal">
-            <strong>Prototype notice.</strong> Tradewell is a frontend demonstration site, not a live service.
-            Valor Roofing LLC is the only real business listed in this directory — every other professional
-            profile, together with all review text, reviewer names, review counts, response times, price
-            ranges and category totals, is fictional content created to populate the layout. No
-            certifications, licenses, insurance, awards, guarantees or warranties are claimed for any
-            business shown here. Tradewell is independent and is not affiliated with, endorsed by, or
-            connected to Angi or any other home services marketplace.
-          </p>
-          <p className="footer__legal">© {new Date().getFullYear()} {SITE.name}</p>
+          <p className="footer__legal">© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -30,12 +30,24 @@ export function ProfileModal() {
     <>
       <div className="modal__head">
         <div className="profile__hero" style={{ flex: 1 }}>
-          <div
-            className="profile__logo"
-            style={{ backgroundColor: pro.accent }}
-          >
-            {pro.initials}
-          </div>
+          {pro.logo || pro.id.startsWith('valor-roofing') ? (
+            <div className="profile__logo relative overflow-hidden bg-[#F4EFEA] border border-[var(--line)] p-1 shadow-2xs">
+              <Image
+                src={pro.logo || '/assets/img/valor-roofing-logo.png'}
+                alt={pro.name}
+                fill
+                className="object-contain p-1"
+                sizes="72px"
+              />
+            </div>
+          ) : (
+            <div
+              className="profile__logo"
+              style={{ backgroundColor: pro.accent }}
+            >
+              {pro.initials}
+            </div>
+          )}
           <div>
             <h3 className="profile__name" id="modalTitle">
               {pro.name}

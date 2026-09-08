@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Pro, isTopRated } from '@/data/tradewell';
 import { StarRating, PinIcon, PhoneIcon } from '@/components/ui/Icons';
 import { useDirectory } from '@/context/DirectoryContext';
@@ -18,9 +19,21 @@ export function ProCard({ pro }: { pro: Pro }) {
 
   return (
     <article className={`pro-card ${isValor ? 'pro-card--featured' : ''}`}>
-      <div className="pro-card__avatar" style={{ backgroundColor: pro.accent }}>
-        {pro.initials}
-      </div>
+      {pro.logo || isValor ? (
+        <div className="pro-card__avatar relative overflow-hidden bg-[#F4EFEA] border border-[var(--line)] p-1 shadow-2xs">
+          <Image
+            src={pro.logo || '/assets/img/valor-roofing-logo.png'}
+            alt={pro.name}
+            fill
+            className="object-contain p-1"
+            sizes="72px"
+          />
+        </div>
+      ) : (
+        <div className="pro-card__avatar" style={{ backgroundColor: pro.accent }}>
+          {pro.initials}
+        </div>
+      )}
       <div>
         <div className="pro-card__head">
           <h3 className="pro-card__name">{pro.name}</h3>

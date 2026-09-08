@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Pro, CORE_CATEGORIES } from '@/data/tradewell';
+import { Pro, CORE_CATEGORIES, IMAGES } from '@/data/tradewell';
 import { SpotlightConfig, LeadItem } from '@/lib/adminTypes';
 import { StarRating, PinIcon, PhoneIcon } from '@/components/ui/Icons';
 
@@ -30,6 +30,9 @@ export default function AdminPage() {
   // Editing pro modal
   const [editingPro, setEditingPro] = useState<Pro | null>(null);
   const [isSavingPro, setIsSavingPro] = useState(false);
+  const [isUploadingGalleryIndex, setIsUploadingGalleryIndex] = useState<number | null>(null);
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState<number>(0);
+  const galleryFileInputRef = useRef<HTMLInputElement>(null);
 
   // Quick score edits map { [proId]: score }
   const [quickScores, setQuickScores] = useState<Record<string, number>>({});
@@ -226,6 +229,64 @@ export default function AdminPage() {
       setIsUploadingImage(false);
       if (e.target) e.target.value = '';
     }
+  }
+
+  // Handle Gallery File Upload for Contractor
+  async function handleGalleryFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file || !editingPro) return;
+
+    setIsUploadingGalleryIndex(activeGalleryIndex);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      if (data.success && data.url) {
+        const currentGallery = editingPro.gallery?.length
+          ? [...editingPro.gallery]
+          : [...(IMAGES[editingPro.category] || IMAGES.Roofing)];
+
+        currentGallery[activeGalleryIndex] = data.url;
+        setEditingPro({ ...editingPro, gallery: currentGallery });
+        showToast(`Gallery photo #${activeGalleryIndex + 1} uploaded!`);
+      } else {
+        showToast(data.error || 'Failed to upload photo', 'error');
+      }
+    } catch {
+      showToast('Error uploading gallery photo', 'error');
+    } finally {
+      setIsUploadingGalleryIndex(null);
+      if (e.target) e.target.value = '';
+    }
+  }
+
+  function handleAddGallerySlot() {
+    if (!editingPro) return;
+    const currentGallery = editingPro.gallery?.length
+      ? [...editingPro.gallery]
+      : [...(IMAGES[editingPro.category] || IMAGES.Roofing)];
+    currentGallery.push('/assets/img/roofing.jpg');
+    setEditingPro({ ...editingPro, gallery: currentGallery });
+    showToast('Added photo slot to gallery');
+  }
+
+  function handleRemoveGallerySlot(idx: number) {
+    if (!editingPro) return;
+    const currentGallery = editingPro.gallery?.length
+      ? [...editingPro.gallery]
+      : [...(IMAGES[editingPro.category] || IMAGES.Roofing)];
+    if (currentGallery.length <= 1) {
+      showToast('Must have at least one gallery photo', 'error');
+      return;
+    }
+    currentGallery.splice(idx, 1);
+    setEditingPro({ ...editingPro, gallery: currentGallery });
   }
 
   // Save Spotlight Form
@@ -658,12 +719,24 @@ export default function AdminPage() {
                           {/* Contractor Info */}
                           <td className="py-4 px-4">
                             <div className="flex items-center gap-3">
-                              <div
-                                className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-none"
-                                style={{ backgroundColor: pro.accent }}
-                              >
-                                {pro.initials}
-                              </div>
+                              {pro.logo || isValor ? (
+                                <div className="w-10 h-10 rounded-lg overflow-hidden border border-[var(--line)] bg-[#F4EFEA] relative flex-none flex items-center justify-center shadow-2xs">
+                                  <Image
+                                    src={pro.logo || '/assets/img/valor-roofing-logo.png'}
+                                    alt={pro.name}
+                                    fill
+                                    className="object-contain p-0.5"
+                                    sizes="40px"
+                                  />
+                                </div>
+                              ) : (
+                                <div
+                                  className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-none"
+                                  style={{ backgroundColor: pro.accent }}
+                                >
+                                  {pro.initials}
+                                </div>
+                              )}
                               <div>
                                 <div className="font-bold text-[var(--ink)] flex items-center gap-2">
                                   <span>{pro.name}</span>
@@ -734,7 +807,13 @@ export default function AdminPage() {
                           <td className="py-4 px-4 text-right">
                             <button
                               type="button"
-                              onClick={() => setEditingPro({ ...pro })}
+                              onClick={() => {
+                                const defaultGallery = IMAGES[pro.category] || IMAGES.Roofing;
+                                setEditingPro({
+                                  ...pro,
+                                  gallery: pro.gallery?.length ? [...pro.gallery] : [...defaultGallery]
+                                });
+                              }}
                               className="text-xs font-bold text-[var(--ink)] hover:text-[var(--accent)] px-3 py-1.5 rounded border border-[var(--line)] hover:bg-white transition-all shadow-2xs"
                             >
                               Edit Details
@@ -1034,6 +1113,17 @@ export default function AdminPage() {
                   <div className="p-6">
                     <div>
                       <div className="pro-card__head">
+                        {(previewSpotlightPro.logo || previewSpotlightPro.id.startsWith('valor-roofing')) && (
+                          <div className="w-8 h-8 rounded-md overflow-hidden border border-[var(--line)] bg-[#F4EFEA] relative flex-none flex items-center justify-center">
+                            <Image
+                              src={previewSpotlightPro.logo || '/assets/img/valor-roofing-logo.png'}
+                              alt={previewSpotlightPro.name}
+                              fill
+                              className="object-contain p-0.5"
+                              sizes="32px"
+                            />
+                          </div>
+                        )}
                         <h3 className="pro-card__name" style={{ fontSize: '22px' }}>
                           {previewSpotlightPro.name}
                         </h3>
@@ -1316,9 +1406,22 @@ export default function AdminPage() {
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-white border border-[var(--line)] rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 shadow-xl animate-in zoom-in-95">
             <div className="flex items-center justify-between pb-4 border-b border-[var(--line)] mb-5">
-              <div>
-                <h3 className="text-lg font-bold text-[var(--ink)]">Edit {editingPro.name}</h3>
-                <p className="text-xs text-[var(--muted)]">Update contractor profile, contact, and scores</p>
+              <div className="flex items-center gap-3">
+                {(editingPro.logo || editingPro.id.startsWith('valor-roofing')) && (
+                  <div className="w-10 h-10 rounded-lg overflow-hidden border border-[var(--line)] bg-[#F4EFEA] relative flex-none flex items-center justify-center">
+                    <Image
+                      src={editingPro.logo || '/assets/img/valor-roofing-logo.png'}
+                      alt={editingPro.name}
+                      fill
+                      className="object-contain p-0.5"
+                      sizes="40px"
+                    />
+                  </div>
+                )}
+                <div>
+                  <h3 className="text-lg font-bold text-[var(--ink)]">Edit {editingPro.name}</h3>
+                  <p className="text-xs text-[var(--muted)]">Update contractor profile, contact, and scores</p>
+                </div>
               </div>
               <button
                 type="button"
@@ -1475,6 +1578,102 @@ export default function AdminPage() {
                   }
                   className="w-full px-3 py-2 rounded-lg border border-[var(--line-2)] text-sm focus:outline-none focus:border-[var(--accent)]"
                 />
+              </div>
+
+              {/* Project Gallery Photos */}
+              <div className="pt-3 border-t border-[var(--line)]">
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--ink)]">
+                      Project Gallery Photos
+                    </label>
+                    <p className="text-[11px] text-[var(--muted)]">
+                      These photos display directly inside the contractor&apos;s public profile under &ldquo;Project Gallery&rdquo;.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddGallerySlot}
+                    className="text-xs font-bold text-[var(--accent)] hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>+ Add Photo</span>
+                  </button>
+                </div>
+
+                <input
+                  ref={galleryFileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleGalleryFileUpload}
+                  className="hidden"
+                />
+
+                <div className="grid grid-cols-3 gap-3">
+                  {(editingPro.gallery?.length ? editingPro.gallery : (IMAGES[editingPro.category] || IMAGES.Roofing)).map((imgUrl, idx) => (
+                    <div
+                      key={idx}
+                      className="border border-[var(--line)] rounded-xl overflow-hidden bg-[var(--surface)] p-2.5 flex flex-col gap-2"
+                    >
+                      <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-white border border-[var(--line)]">
+                        <Image
+                          src={imgUrl}
+                          alt={`Project gallery photo ${idx + 1}`}
+                          fill
+                          className="object-cover"
+                          sizes="180px"
+                        />
+                        <span className="absolute top-1.5 left-1.5 text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-black/70 text-white">
+                          #{idx + 1}
+                        </span>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <button
+                          type="button"
+                          disabled={isUploadingGalleryIndex === idx}
+                          onClick={() => {
+                            setActiveGalleryIndex(idx);
+                            galleryFileInputRef.current?.click();
+                          }}
+                          className="w-full btn btn--outline btn--sm text-[11px] py-1 font-bold flex items-center justify-center gap-1 cursor-pointer hover:bg-white"
+                        >
+                          <svg className="w-3 h-3 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                          </svg>
+                          <span>{isUploadingGalleryIndex === idx ? 'Uploading...' : '📁 Upload Photo'}</span>
+                        </button>
+
+                        <div className="flex items-center gap-1">
+                          <input
+                            type="text"
+                            value={imgUrl}
+                            onChange={(e) => {
+                              const current = editingPro.gallery?.length
+                                ? [...editingPro.gallery]
+                                : [...(IMAGES[editingPro.category] || IMAGES.Roofing)];
+                              current[idx] = e.target.value;
+                              setEditingPro({ ...editingPro, gallery: current });
+                            }}
+                            placeholder="Image URL"
+                            className="w-full text-[10px] font-mono px-2 py-1 rounded border border-[var(--line-2)] bg-white focus:outline-none focus:border-[var(--accent)]"
+                          />
+                          {(editingPro.gallery?.length || 3) > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveGallerySlot(idx)}
+                              className="text-red-400 hover:text-red-600 text-xs px-1 font-bold cursor-pointer"
+                              title="Remove photo"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="pt-4 border-t border-[var(--line)] flex justify-end gap-3">
