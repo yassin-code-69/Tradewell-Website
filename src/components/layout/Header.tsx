@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { CATEGORIES, SITE } from '@/data/tradewell';
 import { Icon } from '@/components/ui/Icons';
 import { useDirectory } from '@/context/DirectoryContext';
@@ -61,20 +62,14 @@ export function Header() {
     <header className={`header ${isScrolled ? 'is-scrolled' : ''}`} ref={headerRef}>
       <div className="wrap header__inner">
         <a className="brand" href="#top" id="brandHome" onClick={handleBrandClick} aria-label={`${SITE.name} — home`}>
-          <span className="brand__mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <circle className="dot" cx="12" cy="12" r="2.6" />
-              <path d="M12 9.4V7.3M12 14.6v2.1M9.4 12H7.3M14.6 12h2.1" />
-              <circle cx="12" cy="5.3" r="1.7" />
-              <circle cx="12" cy="18.7" r="1.7" />
-              <circle cx="5.3" cy="12" r="1.7" />
-              <circle cx="18.7" cy="12" r="1.7" />
-            </svg>
-          </span>
-          <span className="brand__text">
-            <span className="brand__name">{SITE.name}</span>
-            <span className="brand__sub">{SITE.tagline}</span>
-          </span>
+          <Image
+            src="/assets/img/tradewell-home-logo-transparent.png"
+            alt="Tradewell Home — All Home Services"
+            width={200}
+            height={42}
+            className="brand__img"
+            priority
+          />
         </a>
 
         <nav className="nav" aria-label="Primary">

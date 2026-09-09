@@ -433,12 +433,21 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-white border border-[var(--line)] rounded-2xl p-8 shadow-md">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-[var(--ink)] flex items-center justify-center text-white font-black text-xl">
-              T
-            </div>
+          <div className="flex items-center gap-3.5 mb-6">
+            <Image
+              src="/assets/img/tradewell-home-mark.png"
+              alt="Tradewell Home"
+              width={48}
+              height={48}
+              className="w-12 h-12 rounded-xl shadow-xs object-contain"
+            />
             <div>
-              <h1 className="text-xl font-bold text-[var(--ink)] tracking-tight">Tradewell Admin</h1>
+              <h1 className="text-xl font-bold text-[var(--ink)] tracking-tight flex items-center gap-2">
+                Tradewell Home
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                  Admin
+                </span>
+              </h1>
               <p className="text-xs text-[var(--muted)]">Arkansas Contractor Directory Management</p>
             </div>
           </div>
@@ -508,10 +517,13 @@ export default function AdminPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href="/admin" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[var(--ink)] flex items-center justify-center text-white font-black text-base">
-                T
-              </div>
-              <span className="font-extrabold text-lg tracking-tight text-[var(--ink)]">Tradewell</span>
+              <Image
+                src="/assets/img/tradewell-home-logo-transparent.png"
+                alt="Tradewell Home"
+                width={160}
+                height={34}
+                className="h-8 w-auto object-contain"
+              />
             </Link>
             <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[var(--surface-2)] text-[var(--ink-2)] border border-[var(--line)]">
               Admin Portal

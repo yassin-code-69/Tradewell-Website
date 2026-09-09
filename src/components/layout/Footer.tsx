@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { SITE } from '@/data/tradewell';
 import { useDirectory } from '@/context/DirectoryContext';
 
@@ -28,22 +29,15 @@ export function Footer() {
       <div className="wrap">
         <div className="footer__top">
           <div className="footer__brand">
-            <span className="brand">
-              <span className="brand__mark" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <circle className="dot" cx="12" cy="12" r="2.6" />
-                  <path d="M12 9.4V7.3M12 14.6v2.1M9.4 12H7.3M14.6 12h2.1" />
-                  <circle cx="12" cy="5.3" r="1.7" />
-                  <circle cx="12" cy="18.7" r="1.7" />
-                  <circle cx="5.3" cy="12" r="1.7" />
-                  <circle cx="18.7" cy="12" r="1.7" />
-                </svg>
-              </span>
-              <span className="brand__text">
-                <span className="brand__name">{SITE.name}</span>
-                <span className="brand__sub">{SITE.tagline}</span>
-              </span>
-            </span>
+            <a href="#top" className="brand" aria-label={`${SITE.name} — home`}>
+              <Image
+                src="/assets/img/tradewell-home-logo-dark.png"
+                alt="Tradewell Home — All Home Services"
+                width={220}
+                height={46}
+                className="brand__img--dark"
+              />
+            </a>
             <p>
               An independent directory covering every home service trade, connecting Arkansas homeowners with local professionals.
             </p>

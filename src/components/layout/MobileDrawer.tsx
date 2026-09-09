@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { CATEGORIES, SITE } from '@/data/tradewell';
 import { ArrowIcon, XMarkIcon } from '@/components/ui/Icons';
 import { useDirectory } from '@/context/DirectoryContext';
@@ -47,20 +48,13 @@ export function MobileDrawer() {
       >
         <div className="drawer__head">
           <span className="brand">
-            <span className="brand__mark" aria-hidden="true">
-              <svg viewBox="0 0 24 24">
-                <circle className="dot" cx="12" cy="12" r="2.6" />
-                <path d="M12 9.4V7.3M12 14.6v2.1M9.4 12H7.3M14.6 12h2.1" />
-                <circle cx="12" cy="5.3" r="1.7" />
-                <circle cx="12" cy="18.7" r="1.7" />
-                <circle cx="5.3" cy="12" r="1.7" />
-                <circle cx="18.7" cy="12" r="1.7" />
-              </svg>
-            </span>
-            <span className="brand__text">
-              <span className="brand__name">{SITE.name}</span>
-              <span className="brand__sub">{SITE.tagline}</span>
-            </span>
+            <Image
+              src="/assets/img/tradewell-home-logo-transparent.png"
+              alt="Tradewell Home — All Home Services"
+              width={180}
+              height={38}
+              className="brand__img"
+            />
           </span>
           <button className="icon-btn" id="closeDrawer" aria-label="Close menu" onClick={closeDrawer}>
             <XMarkIcon />

@@ -116,9 +116,9 @@ export interface StepItem {
 }
 
 export const SITE: SiteInfo = {
-  name: 'Tradewell',
+  name: 'Tradewell Home',
   tagline: 'All Home Services',
-  title: 'Tradewell — Find Trusted Home Service Professionals in Arkansas',
+  title: 'Tradewell Home — Find Trusted Home Service Professionals in Arkansas',
   blurb: 'Connect with vetted local pros across Arkansas. Compare ratings and request estimates.'
 };
 
