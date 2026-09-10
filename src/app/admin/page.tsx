@@ -638,7 +638,7 @@ export default function AdminPage() {
           >
             <span>Leads & Inquiries Inbox</span>
             {leads.filter((l) => l.status === 'new').length > 0 && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--accent)] text-white font-black">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--accent)] text-[var(--ink)] font-black">
                 {leads.filter((l) => l.status === 'new').length} New
               </span>
             )}
@@ -788,7 +788,7 @@ export default function AdminPage() {
                                   type="button"
                                   disabled={isSaving}
                                   onClick={() => handleSaveQuickScore(pro.id)}
-                                  className="text-xs font-bold px-2.5 py-1 rounded bg-[var(--accent)] text-white hover:opacity-90 transition-opacity"
+                                  className="text-xs font-bold px-2.5 py-1 rounded bg-[var(--accent)] text-[var(--ink)] hover:opacity-90 transition-opacity"
                                 >
                                   {isSaving ? '...' : 'Save'}
                                 </button>

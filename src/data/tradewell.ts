@@ -433,7 +433,7 @@ export const PROS: Pro[] = [
     area: 'White County',
     covers: ['Searcy', 'Beebe', 'Bald Knob', 'Heber Springs', 'Cabot'],
     initials: 'JH',
-    accent: '#E2582F',
+    accent: '#FCAF21',
     responds: 'Responds in about 2 hours',
     blurb: 'Dependable commercial & residential HVAC diagnostics, installations, and repairs.',
     about: 'Jason’s Heat and Air provides honest, expert service for commercial offices, retail buildings, and homes across White County and beyond.'
