@@ -31,7 +31,7 @@ export function Footer() {
           <div className="footer__brand">
             <a href="#top" className="brand" aria-label={`${SITE.name} — home`}>
               <Image
-                src="/assets/img/tradewell-home-logo-dark.png"
+                src="/assets/img/tradewell-home-logo-dark-v2.png"
                 alt="Tradewell Home — All Home Services"
                 width={220}
                 height={46}

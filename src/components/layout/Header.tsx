@@ -63,7 +63,7 @@ export function Header() {
       <div className="wrap header__inner">
         <a className="brand" href="#top" id="brandHome" onClick={handleBrandClick} aria-label={`${SITE.name} — home`}>
           <Image
-            src="/assets/img/tradewell-home-logo-transparent.png"
+            src="/assets/img/tradewell-home-logo-v2.png"
             alt="Tradewell Home — All Home Services"
             width={200}
             height={42}

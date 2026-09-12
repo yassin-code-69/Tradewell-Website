@@ -49,7 +49,7 @@ export function MobileDrawer() {
         <div className="drawer__head">
           <span className="brand">
             <Image
-              src="/assets/img/tradewell-home-logo-transparent.png"
+              src="/assets/img/tradewell-home-logo-v2.png"
               alt="Tradewell Home — All Home Services"
               width={180}
               height={38}

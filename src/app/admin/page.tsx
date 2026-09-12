@@ -435,7 +435,7 @@ export default function AdminPage() {
         <div className="w-full max-w-md bg-white border border-[var(--line)] rounded-2xl p-8 shadow-md">
           <div className="flex items-center gap-3.5 mb-6">
             <Image
-              src="/assets/img/tradewell-home-mark.png"
+              src="/assets/img/tradewell-home-mark-v2.png"
               alt="Tradewell Home"
               width={48}
               height={48}
@@ -518,7 +518,7 @@ export default function AdminPage() {
           <div className="flex items-center gap-3">
             <Link href="/admin" className="flex items-center gap-2.5">
               <Image
-                src="/assets/img/tradewell-home-logo-transparent.png"
+                src="/assets/img/tradewell-home-logo-v2.png"
                 alt="Tradewell Home"
                 width={160}
                 height={34}

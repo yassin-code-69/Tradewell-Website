@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   title: 'Tradewell Home — All Home Services',
   description: 'Tradewell Home is Arkansas\' trusted home services directory. Compare local roofing, plumbing, HVAC, electrical, cleaning and landscaping professionals across 63 categories.',
   icons: {
-    icon: '/assets/img/tradewell-home-mark.png',
-    apple: '/assets/img/tradewell-home-mark.png',
+    icon: '/assets/img/tradewell-home-mark-v2.png',
+    apple: '/assets/img/tradewell-home-mark-v2.png',
   },
 };
 
