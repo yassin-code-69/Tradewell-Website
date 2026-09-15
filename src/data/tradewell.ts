@@ -77,6 +77,7 @@ export interface Pro {
   covers: string[];
   phone?: string;
   phoneHref?: string;
+  facebookUrl?: string;
   logo?: string;
   gallery?: string[];
   initials: string;
@@ -200,7 +201,7 @@ export const FAMILIES: Record<string, TradeFamily> = {
   },
   homerepairs: {
     cats: ['Home repairs', 'General Contractors', 'Drywall', 'Carpentry', 'Siding'],
-    keywords: ['repair', 'home repair', 'construction', 'markley', 'fuller', 'carpentry', 'drywall']
+    keywords: ['repair', 'home repair', 'construction', 'markland', 'markley', 'paragould', 'fuller', 'carpentry', 'drywall']
   },
   hvac: {
     cats: ['HVAC (Commercial)', 'HVAC', 'AC Repair', 'Furnace Repair'],
@@ -280,6 +281,7 @@ export const PROS: Pro[] = [
     covers: NE_AR.concat(CENTRAL_AR),
     phone: '+1 870-316-8800',
     phoneHref: 'tel:+18703168800',
+    facebookUrl: 'https://www.facebook.com/profile.php?id=61577900033970',
     initials: 'VR',
     accent: '#B8402C',
     responds: 'Typically responds same day',
@@ -346,8 +348,8 @@ export const PROS: Pro[] = [
 
   /* ---------------- Home repairs ---------------- */
   {
-    id: 'markley-construction',
-    name: 'Markley Construction Inc',
+    id: 'markland-construction',
+    name: 'Markland Construction Inc',
     demo: false,
     tradewellScore: 98,
     category: 'Home repairs',
@@ -355,14 +357,14 @@ export const PROS: Pro[] = [
     services: ['Structural Repairs', 'Finish Carpentry', 'Drywall Repair', 'Home Renovations'],
     rating: 4.9,
     reviews: 135,
-    city: 'Cabot, AR',
-    area: 'Lonoke County & Central AR',
-    covers: ['Cabot', 'Jacksonville', 'Sherwood', 'Beebe', 'Little Rock'],
+    city: 'Paragould, Arkansas',
+    area: 'Greene County & NE Arkansas',
+    covers: ['Paragould', 'Jonesboro', 'Brookland', 'Marmaduke', 'Rector'],
     initials: 'MC',
     accent: '#B5761F',
     responds: 'Responds in about 2 hours',
-    blurb: 'General home repairs, structural carpentry, and turnkey residential improvements.',
-    about: 'Markley Construction Inc delivers reliable home repair solutions including framing, rot repair, interior patching, and exterior envelope fixes.'
+    blurb: 'General home repairs, structural carpentry, and turnkey residential improvements in Paragould and NE Arkansas.',
+    about: 'Markland Construction Inc is based in Paragould, Arkansas, delivering reliable home repair solutions including framing, rot repair, interior patching, and exterior envelope fixes throughout Greene County and Northeast Arkansas.'
   },
   {
     id: 'fuller-construction',
@@ -722,7 +724,13 @@ export function reviewsFor(pro: Pro): ReviewItem[] {
   return out;
 }
 
-export const byId = (id: string): Pro | undefined => PROS.find((p) => p.id === id);
+export const byId = (id: string): Pro | undefined =>
+  PROS.find(
+    (p) =>
+      p.id === id ||
+      (id === 'markley-construction' && p.id === 'markland-construction') ||
+      (id === 'markland-construction' && p.id === 'markley-construction')
+  );
 export const galleryFor = (pro: Pro): string[] =>
   pro.gallery && pro.gallery.length > 0
     ? pro.gallery

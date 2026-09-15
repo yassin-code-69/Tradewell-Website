@@ -12,6 +12,8 @@ import {
   Icon,
   StarRating,
   PhoneIcon,
+  PinIcon,
+  FacebookIcon,
   XMarkIcon
 } from '@/components/ui/Icons';
 import { useDirectory } from '@/context/DirectoryContext';
@@ -22,6 +24,12 @@ export function ProfileModal() {
   if (!activeProId) return null;
   const pro = pros.find((p) => p.id === activeProId) || byId(activeProId);
   if (!pro) return null;
+
+  const facebookUrl =
+    pro.facebookUrl ||
+    (pro.id.startsWith('valor-roofing')
+      ? 'https://www.facebook.com/profile.php?id=61577900033970'
+      : undefined);
 
   const gallery = galleryFor(pro);
   const reviews = reviewsFor(pro);
@@ -60,6 +68,9 @@ export function ProfileModal() {
                   ? `${pro.reviews} reviews`
                   : 'Rating from public profile'}
               </span>
+              <span className="pro-card__loc" style={{ color: 'var(--muted)', fontSize: '14px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <PinIcon /> {pro.city}
+              </span>
               {pro.tradewellScore && (
                 <span className="pro-card__score" style={{ fontSize: '13.5px' }}>
                   Tradewell Score: <b>{pro.tradewellScore}/100</b>
@@ -92,6 +103,12 @@ export function ProfileModal() {
         )}
 
         <div className="profile__stats">
+          <div className="profile__stat">
+            <div className="l">Location</div>
+            <span className="v" style={{ fontSize: '14px', fontWeight: 600 }}>
+              {pro.city}
+            </span>
+          </div>
           <div className="profile__stat">
             <div className="l">Category</div>
             <span className="v">{pro.category}</span>
@@ -202,6 +219,18 @@ export function ProfileModal() {
                 <PhoneIcon /> Contact through the directory
               </span>
             )}
+            {facebookUrl && (
+              <a
+                className="profile__social profile__social--fb"
+                href={facebookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`${pro.name} Official Facebook Page`}
+              >
+                <FacebookIcon />
+                <span>Facebook Page</span>
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -215,6 +244,18 @@ export function ProfileModal() {
           >
             <PhoneIcon />
             <span>Call {pro.phone}</span>
+          </a>
+        )}
+        {facebookUrl && (
+          <a
+            className="btn btn--fb"
+            href={facebookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Visit Facebook Page"
+          >
+            <FacebookIcon />
+            <span>Facebook Page</span>
           </a>
         )}
         <button

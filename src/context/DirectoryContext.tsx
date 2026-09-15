@@ -129,7 +129,11 @@ export function DirectoryProvider({ children }: { children: React.ReactNode }) {
       const p = r.pro;
       if (minRating > 0 && p.rating < minRating) return false;
       if (category && !p.categories.includes(category)) return false;
-      if (city && !p.covers.some((c) => norm(c) === norm(city))) return false;
+      if (city) {
+        const cNorm = norm(city.split(',')[0].trim());
+        const matched = p.covers.some((c) => norm(c) === cNorm) || norm(p.city).includes(cNorm);
+        if (!matched) return false;
+      }
       if (fast && !/hour|same day/i.test(p.responds)) return false;
       return true;
     });

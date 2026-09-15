@@ -1553,6 +1553,19 @@ export default function AdminPage() {
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-[var(--ink)] mb-1">
+                  Facebook Page Link (optional)
+                </label>
+                <input
+                  type="url"
+                  value={editingPro.facebookUrl || ''}
+                  onChange={(e) => setEditingPro({ ...editingPro, facebookUrl: e.target.value })}
+                  placeholder="https://www.facebook.com/..."
+                  className="w-full px-3 py-2 rounded-lg border border-[var(--line-2)] text-sm focus:outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[var(--ink)] mb-1">
                   Location / City Tag
                 </label>
                 <input

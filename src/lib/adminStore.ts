@@ -17,7 +17,7 @@ export const INITIAL_PROS: Pro[] = PROS.map((p) => ({
       ? 98
       : p.id === 'mws-electrical'
       ? 99
-      : p.id === 'markley-construction'
+      : (p.id === 'markley-construction' || p.id === 'markland-construction')
       ? 98
       : p.id === 'townsend-heat-air'
       ? 98

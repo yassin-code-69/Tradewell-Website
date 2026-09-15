@@ -55,6 +55,7 @@
       ],
       "phone": "+1 870-316-8800",
       "phoneHref": "tel:+18703168800",
+      "facebookUrl": "https://www.facebook.com/profile.php?id=61577900033970",
       "initials": "VR",
       "accent": "#B8402C",
       "responds": "Typically responds same day",
@@ -175,8 +176,8 @@
       "about": "Prime Roofing provides premium roofing replacements, high-wind shingle installations, and fast leak repairs across Central Arkansas."
     },
     {
-      "id": "markley-construction",
-      "name": "Markley Construction Inc",
+      "id": "markland-construction",
+      "name": "Markland Construction Inc",
       "demo": false,
       "tradewellScore": 98,
       "category": "Home repairs",
@@ -194,20 +195,20 @@
       ],
       "rating": 4.9,
       "reviews": 135,
-      "city": "Cabot, AR",
-      "area": "Lonoke County & Central AR",
+      "city": "Paragould, Arkansas",
+      "area": "Greene County & NE Arkansas",
       "covers": [
-        "Cabot",
-        "Jacksonville",
-        "Sherwood",
-        "Beebe",
-        "Little Rock"
+        "Paragould",
+        "Jonesboro",
+        "Brookland",
+        "Marmaduke",
+        "Rector"
       ],
       "initials": "MC",
       "accent": "#B5761F",
       "responds": "Responds in about 2 hours",
-      "blurb": "General home repairs, structural carpentry, and turnkey residential improvements.",
-      "about": "Markley Construction Inc delivers reliable home repair solutions including framing, rot repair, interior patching, and exterior envelope fixes."
+      "blurb": "General home repairs, structural carpentry, and turnkey residential improvements in Paragould and NE Arkansas.",
+      "about": "Markland Construction Inc is based in Paragould, Arkansas, delivering reliable home repair solutions including framing, rot repair, interior patching, and exterior envelope fixes throughout Greene County and Northeast Arkansas."
     },
     {
       "id": "fuller-construction",
