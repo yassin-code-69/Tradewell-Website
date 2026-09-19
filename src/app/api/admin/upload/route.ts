@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
+import { uploadImageToStorage, deleteImageFromStorage, optimizeImage, getSupabaseAdmin } from '@/lib/supabaseAdmin';
 
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const file = formData.get('file') as File | null;
+    const folder = (formData.get('folder') as 'contractors' | 'spotlight' | 'general') || 'contractors';
 
     if (!file) {
       return NextResponse.json(
@@ -22,10 +24,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Limit size to 10MB
-    if (file.size > 10 * 1024 * 1024) {
+    // Limit size to 15MB before optimization
+    if (file.size > 15 * 1024 * 1024) {
       return NextResponse.json(
-        { success: false, error: 'Image size exceeds 10MB limit. Please choose a smaller image.' },
+        { success: false, error: 'Image size exceeds 15MB limit. Please choose a smaller image.' },
         { status: 400 }
       );
     }
@@ -33,29 +35,112 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Target upload directory in /public/uploads
+    // 1. Try uploading to Supabase Storage if configured
+    const supabase = getSupabaseAdmin();
+    if (supabase) {
+      try {
+        const uploadResult = await uploadImageToStorage(buffer, file.name, folder);
+        return NextResponse.json({
+          success: true,
+          url: uploadResult.url,
+          storagePath: uploadResult.path,
+          fileName: file.name,
+          originalSize: file.size,
+          optimizedSize: uploadResult.size,
+          format: 'webp',
+          storage: 'supabase'
+        });
+      } catch (storageErr: any) {
+        console.warn('Supabase storage upload failed, falling back to local storage:', storageErr.message);
+      }
+    }
+
+    // 2. Fallback: Optimize with sharp and save locally to /public/uploads
+    const { buffer: optimizedBuffer, size: optimizedSize } = await optimizeImage(buffer);
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
     await fs.mkdir(uploadsDir, { recursive: true });
 
-    // Sanitize filename and prepend timestamp
-    const cleanFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_').toLowerCase();
-    const uniqueFileName = `${Date.now()}-${cleanFileName}`;
+    const cleanFileName = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+    const uniqueFileName = `${Date.now()}-${cleanFileName}.webp`;
     const filePath = path.join(uploadsDir, uniqueFileName);
 
-    await fs.writeFile(filePath, buffer);
-
-    const publicUrl = `/uploads/${uniqueFileName}`;
+    await fs.writeFile(filePath, optimizedBuffer);
 
     return NextResponse.json({
       success: true,
-      url: publicUrl,
+      url: `/uploads/${uniqueFileName}`,
       fileName: file.name,
-      size: file.size
+      originalSize: file.size,
+      optimizedSize,
+      format: 'webp',
+      storage: 'local'
     });
   } catch (err: any) {
     console.error('Error handling image upload:', err);
     return NextResponse.json(
-      { success: false, error: err.message || 'Failed to upload image to server.' },
+      { success: false, error: err.message || 'Failed to optimize and upload image.' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    let targetUrl = searchParams.get('url');
+
+    if (!targetUrl) {
+      try {
+        const body = await req.json();
+        targetUrl = body.url;
+      } catch {
+        // empty body
+      }
+    }
+
+    if (!targetUrl) {
+      return NextResponse.json({ success: false, error: 'Image URL is required for deletion' }, { status: 400 });
+    }
+
+    // 1. If it's a Supabase storage URL
+    if (targetUrl.includes('supabase.co') || targetUrl.includes('tradewell-media')) {
+      const deleted = await deleteImageFromStorage(targetUrl);
+      return NextResponse.json({
+        success: true,
+        deleted,
+        storage: 'supabase',
+        url: targetUrl
+      });
+    }
+
+    // 2. If it's a local upload
+    if (targetUrl.startsWith('/uploads/')) {
+      const fileName = path.basename(targetUrl);
+      const filePath = path.join(process.cwd(), 'public', 'uploads', fileName);
+      try {
+        await fs.unlink(filePath);
+      } catch {
+        // File may already be removed
+      }
+      return NextResponse.json({
+        success: true,
+        deleted: true,
+        storage: 'local',
+        url: targetUrl
+      });
+    }
+
+    // Static assets (/assets/...) are protected and not deleted from disk
+    return NextResponse.json({
+      success: true,
+      deleted: false,
+      message: 'Static template image references removed from database without deleting base asset.',
+      url: targetUrl
+    });
+  } catch (err: any) {
+    console.error('Error deleting image:', err);
+    return NextResponse.json(
+      { success: false, error: err.message || 'Failed to delete image.' },
       { status: 500 }
     );
   }

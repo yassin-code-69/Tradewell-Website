@@ -208,6 +208,7 @@ export default function AdminPage() {
     try {
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('folder', 'spotlight');
 
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
@@ -217,9 +218,19 @@ export default function AdminPage() {
       const data = await res.json();
       if (data.success && data.url) {
         if (spotlightForm) {
+          // If previous image was a custom upload, optionally delete the old one
+          const oldUrl = spotlightForm.projectImage;
+          if (oldUrl && oldUrl !== data.url && (oldUrl.includes('supabase.co') || oldUrl.includes('tradewell-media') || oldUrl.startsWith('/uploads/'))) {
+            try {
+              fetch(`/api/admin/upload?url=${encodeURIComponent(oldUrl)}`, { method: 'DELETE' });
+            } catch {
+              // non-blocking
+            }
+          }
           setSpotlightForm({ ...spotlightForm, projectImage: data.url });
         }
-        showToast(`Photo "${file.name}" uploaded successfully!`);
+        const sizeKb = data.optimizedSize ? `${(data.optimizedSize / 1024).toFixed(0)} KB` : '';
+        showToast(`Photo optimized & uploaded! ${sizeKb ? `(${sizeKb} WebP)` : ''}`);
       } else {
         showToast(data.error || 'Failed to upload photo', 'error');
       }
@@ -240,6 +251,7 @@ export default function AdminPage() {
     try {
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('folder', 'contractors');
 
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
@@ -252,9 +264,21 @@ export default function AdminPage() {
           ? [...editingPro.gallery]
           : [...(IMAGES[editingPro.category] || IMAGES.Roofing)];
 
+        // Clean up replaced custom image from storage if existing
+        const oldUrl = currentGallery[activeGalleryIndex];
+        if (oldUrl && oldUrl !== data.url && (oldUrl.includes('supabase.co') || oldUrl.includes('tradewell-media') || oldUrl.startsWith('/uploads/'))) {
+          try {
+            fetch(`/api/admin/upload?url=${encodeURIComponent(oldUrl)}`, { method: 'DELETE' });
+          } catch {
+            // non-blocking
+          }
+        }
+
         currentGallery[activeGalleryIndex] = data.url;
         setEditingPro({ ...editingPro, gallery: currentGallery });
-        showToast(`Gallery photo #${activeGalleryIndex + 1} uploaded!`);
+
+        const sizeKb = data.optimizedSize ? ` (${(data.optimizedSize / 1024).toFixed(0)} KB WebP)` : '';
+        showToast(`Gallery photo #${activeGalleryIndex + 1} optimized & uploaded!${sizeKb}`);
       } else {
         showToast(data.error || 'Failed to upload photo', 'error');
       }
@@ -276,7 +300,7 @@ export default function AdminPage() {
     showToast('Added photo slot to gallery');
   }
 
-  function handleRemoveGallerySlot(idx: number) {
+  async function handleRemoveGallerySlot(idx: number) {
     if (!editingPro) return;
     const currentGallery = editingPro.gallery?.length
       ? [...editingPro.gallery]
@@ -285,6 +309,24 @@ export default function AdminPage() {
       showToast('Must have at least one gallery photo', 'error');
       return;
     }
+
+    const removedUrl = currentGallery[idx];
+    if (removedUrl && (removedUrl.includes('supabase.co') || removedUrl.includes('tradewell-media') || removedUrl.startsWith('/uploads/'))) {
+      if (!confirm('Are you sure you want to permanently delete this photo from storage?')) {
+        return;
+      }
+      try {
+        await fetch(`/api/admin/upload?url=${encodeURIComponent(removedUrl)}`, {
+          method: 'DELETE'
+        });
+        showToast('Photo permanently removed from storage & gallery');
+      } catch (err) {
+        console.warn('Could not delete asset from storage:', err);
+      }
+    } else {
+      showToast('Photo removed from contractor gallery');
+    }
+
     currentGallery.splice(idx, 1);
     setEditingPro({ ...editingPro, gallery: currentGallery });
   }
@@ -1637,7 +1679,7 @@ export default function AdminPage() {
                   {(editingPro.gallery?.length ? editingPro.gallery : (IMAGES[editingPro.category] || IMAGES.Roofing)).map((imgUrl, idx) => (
                     <div
                       key={idx}
-                      className="border border-[var(--line)] rounded-xl overflow-hidden bg-[var(--surface)] p-2.5 flex flex-col gap-2"
+                      className="border border-[var(--line)] rounded-xl overflow-hidden bg-[var(--surface)] p-2.5 flex flex-col gap-2 group transition-all hover:border-[var(--line-2)] hover:shadow-xs"
                     >
                       <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-white border border-[var(--line)]">
                         <Image
@@ -1650,9 +1692,23 @@ export default function AdminPage() {
                         <span className="absolute top-1.5 left-1.5 text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-black/70 text-white">
                           #{idx + 1}
                         </span>
+
+                        {/* Top-Right Delete Action Button */}
+                        {(editingPro.gallery?.length || 3) > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveGallerySlot(idx)}
+                            className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-600/90 hover:bg-red-600 text-white flex items-center justify-center transition-all shadow-xs cursor-pointer hover:scale-110"
+                            title="Delete photo"
+                          >
+                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <path d="M18 6L6 18M6 6l12 12" />
+                            </svg>
+                          </button>
+                        )}
                       </div>
 
-                      <div className="space-y-1.5">
+                      <div className="pt-0.5">
                         <button
                           type="button"
                           disabled={isUploadingGalleryIndex === idx}
@@ -1660,41 +1716,15 @@ export default function AdminPage() {
                             setActiveGalleryIndex(idx);
                             galleryFileInputRef.current?.click();
                           }}
-                          className="w-full btn btn--outline btn--sm text-[11px] py-1 font-bold flex items-center justify-center gap-1 cursor-pointer hover:bg-white"
+                          className="w-full btn btn--outline btn--sm text-[11px] py-1.5 font-bold flex items-center justify-center gap-1.5 cursor-pointer hover:bg-white hover:border-[var(--ink-2)] transition-colors"
                         >
-                          <svg className="w-3 h-3 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <svg className="w-3.5 h-3.5 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                             <polyline points="17 8 12 3 7 8" />
                             <line x1="12" y1="3" x2="12" y2="15" />
                           </svg>
                           <span>{isUploadingGalleryIndex === idx ? 'Uploading...' : '📁 Upload Photo'}</span>
                         </button>
-
-                        <div className="flex items-center gap-1">
-                          <input
-                            type="text"
-                            value={imgUrl}
-                            onChange={(e) => {
-                              const current = editingPro.gallery?.length
-                                ? [...editingPro.gallery]
-                                : [...(IMAGES[editingPro.category] || IMAGES.Roofing)];
-                              current[idx] = e.target.value;
-                              setEditingPro({ ...editingPro, gallery: current });
-                            }}
-                            placeholder="Image URL"
-                            className="w-full text-[10px] font-mono px-2 py-1 rounded border border-[var(--line-2)] bg-white focus:outline-none focus:border-[var(--accent)]"
-                          />
-                          {(editingPro.gallery?.length || 3) > 1 && (
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveGallerySlot(idx)}
-                              className="text-red-400 hover:text-red-600 text-xs px-1 font-bold cursor-pointer"
-                              title="Remove photo"
-                            >
-                              ✕
-                            </button>
-                          )}
-                        </div>
                       </div>
                     </div>
                   ))}
