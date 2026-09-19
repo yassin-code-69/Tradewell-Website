@@ -51,11 +51,26 @@ export async function POST(req: NextRequest) {
           storage: 'supabase'
         });
       } catch (storageErr: any) {
-        console.warn('Supabase storage upload failed, falling back to local storage:', storageErr.message);
+        console.error('Supabase storage upload failed:', storageErr.message);
+        return NextResponse.json(
+          { success: false, error: `Supabase Storage upload failed: ${storageErr.message}` },
+          { status: 500 }
+        );
       }
     }
 
-    // 2. Fallback: Optimize with sharp and save locally to /public/uploads
+    // 2. If running on Vercel or cloud serverless, filesystem is read-only
+    if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Supabase Storage is not configured. Please add NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, and SUPABASE_SERVICE_ROLE_KEY in your Vercel Project Settings > Environment Variables.'
+        },
+        { status: 500 }
+      );
+    }
+
+    // 3. Local Development Fallback: Optimize with sharp and save locally to /public/uploads
     const { buffer: optimizedBuffer, size: optimizedSize } = await optimizeImage(buffer);
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
     await fs.mkdir(uploadsDir, { recursive: true });
